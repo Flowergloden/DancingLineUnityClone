@@ -22,6 +22,6 @@ public class HitCheck : MonoBehaviour
     private void Lost()
     {
         mov.StopLine();
-        Time.timeScale = 0;
+        GameMode.Lost();
     }
 }
