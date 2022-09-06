@@ -6,43 +6,50 @@ using UnityEngine;
 public class Jump : MonoBehaviour
 {
     public Transform to;
-    
+    public MyTimer timer;
+    public float deltaXorZ;
+
+    private MovementComponent.Direction _dir;
+    private AnimationCurve _anim;
     private GameObject _mainLine;
-    private Rigidbody _rb;
     private MovementComponent _mov;
     private Vector3 _origin;
     private Vector3 _tar;
-    private float _distance;
     private float _time;
-    private Vector3 _velocity;
     private bool _startJump;
 
     private void Start()
     {
         _mainLine = GameObject.FindWithTag("Line");
-        _rb = _mainLine.GetComponent<Rigidbody>();
         _mov = _mainLine.GetComponent<MovementComponent>();
+        _time = deltaXorZ / _mov.speed;
+        _anim = AnimationCurve.EaseInOut(0, 0, _time, 1);
     }
-    
+
+    private void FixedUpdate()
+    {
+        if(_startJump)
+            _mainLine.transform.position = Vector3.Lerp(_origin,_tar,_anim.Evaluate(timer.time));
+    }
+
     public void Target()
     {
         _origin = _mainLine.transform.position;
-        _tar = new Vector3(_origin.x, to.position.y,_origin.z);
-        GetDistance();
-        _time = _distance / (_mov.speed * Time.fixedDeltaTime);
-        _mainLine.transform.position = Vector3.SmoothDamp(_origin, _tar,ref _velocity, _time);
-    }
-
-    private void GetDistance()//获取当前方向的增量
-    {
-        MovementComponent.Direction direction = _mov.direction;
-        if (direction == 0)
+        if (_dir == MovementComponent.Direction.X)
         {
-            _distance= Mathf.Abs(_tar.x - _origin.x);
+            _tar = new Vector3(to.position.x, to.position.y, _origin.z);
         }
         else
         {
-            _distance = Mathf.Abs(_tar.z - _origin.z);
+            _tar = new Vector3(_origin.x, to.position.y, to.position.z);
         }
+        timer.ResetTime();
+        _startJump = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Line"))
+            _startJump = false;
     }
 }
