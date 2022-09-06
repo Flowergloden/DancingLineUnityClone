@@ -6,15 +6,23 @@ using UnityEngine;
 
 public class MyTimer : MonoBehaviour
 {
-    public float time = 0;
+    private float _time = 0;
+
+    public float time
+    {
+        get
+        {
+            return _time;
+        }
+    }
 
     private void FixedUpdate()
     {
-        time += Time.fixedDeltaTime;
+        _time += Time.fixedDeltaTime;
     }
 
     public void ResetTime()
     {
-        time = 0;
+        _time = 0;
     }
 }
