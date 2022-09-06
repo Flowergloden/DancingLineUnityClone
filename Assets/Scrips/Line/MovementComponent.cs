@@ -63,7 +63,7 @@ public class MovementComponent : MonoBehaviour
 
     private void Turn()//转向
     {
-        if (Input.GetButtonDown("Turn"))
+        if (Input.GetButtonDown("Turn") && !_falling)
         {
             _attachedLine.HasStop = true;
             direction = (direction == Direction.X) ? Direction.Z : Direction.X;
