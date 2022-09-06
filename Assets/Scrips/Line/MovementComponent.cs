@@ -85,4 +85,10 @@ public class MovementComponent : MonoBehaviour
             _falling = false;
         }
     }
+
+    public void StopLine()
+    {
+        _attachedLine.HasStop = true;
+        deltaScale = Vector3.zero;
+    }
 }
