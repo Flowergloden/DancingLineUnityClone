@@ -6,18 +6,22 @@ using UnityEngine;
 public class HitCheck : MonoBehaviour
 {
     public MovementComponent mov;//获取_AttachedLine
-    private void OnCollisionEnter(Collision collision)
+    public Rigidbody rb;//获取MainLine的rigidbody
+    private void OnCollisionEnter(Collision collision)//碰撞
     {
         if (collision.collider.CompareTag("Wall"))
-        {
             Lost();
-        }
+    }
+
+    private void Update()//掉落
+    {
+        if(rb.velocity.y < -20)
+            Lost();
     }
 
     private void Lost()
     {
         mov.StopLine();
         Time.timeScale = 0;
-        Debug.Log("lost");
     }
 }

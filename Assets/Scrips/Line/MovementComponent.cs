@@ -86,7 +86,7 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    public void StopLine()
+    public void StopLine()//停止移动
     {
         _attachedLine.HasStop = true;
         deltaScale = Vector3.zero;
