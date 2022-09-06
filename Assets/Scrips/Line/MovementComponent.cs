@@ -24,6 +24,7 @@ public class MovementComponent : MonoBehaviour
     [HideInInspector]public Vector3 deltaScale;
 
     private AttachedLine _attachedLine;
+    private bool _falling = false;
     private void Start()
     {
         GetDeltaScale();
@@ -33,15 +34,12 @@ public class MovementComponent : MonoBehaviour
     private void FixedUpdate()
     {
         tr.position += deltaScale;//位移
-        StopByChance();
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Turn"))
-        {
-            Turn();
-        }
+        Turn();
+        StopByChance();
     }
 
     private void GetDeltaScale()//获取当前方向的增量
@@ -65,23 +63,26 @@ public class MovementComponent : MonoBehaviour
 
     private void Turn()//转向
     {
-        _attachedLine.HasStop = true;
-        direction = (direction == Direction.X) ? Direction.Z : Direction.X;
-        GetDeltaScale();
-        CreatNewLine();
+        if (Input.GetButtonDown("Turn"))
+        {
+            _attachedLine.HasStop = true;
+            direction = (direction == Direction.X) ? Direction.Z : Direction.X;
+            GetDeltaScale();
+            CreatNewLine();
+        }
     }
     
     private void StopByChance()//处理悬空情况
     {
-        bool temp = false;
-        if(rb.velocity.y > 0.1 || rb.velocity.y < -0.1)
+        if(Mathf.Abs(rb.velocity.y) > 0.1)
         {
-            temp = true;
+            _falling = true;
             _attachedLine.HasStop = true;
         }
-        else if (temp)
+        else if(_falling)
         {
             CreatNewLine();
+            _falling = false;
         }
     }
 }
