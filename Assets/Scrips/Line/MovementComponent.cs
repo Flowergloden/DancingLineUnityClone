@@ -74,12 +74,12 @@ public class MovementComponent : MonoBehaviour
     private void StopByChance()//处理悬空情况
     {
         bool temp = false;
-        if(rb.velocity.y != 0)
+        if(rb.velocity.y > 0.1 || rb.velocity.y < -0.1)
         {
             temp = true;
             _attachedLine.HasStop = true;
         }
-        if (temp && rb.velocity.y == 0)
+        else if (temp)
         {
             CreatNewLine();
         }
