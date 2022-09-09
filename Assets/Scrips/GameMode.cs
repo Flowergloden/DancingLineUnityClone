@@ -27,4 +27,9 @@ public class GameMode : MonoBehaviour
         if (Input.GetButtonDown("Start"))
             SceneManager.LoadScene("Scenes/SampleScene");
     }
+
+    public static void Win()
+    {
+        Debug.Log("win");
+    }
 }

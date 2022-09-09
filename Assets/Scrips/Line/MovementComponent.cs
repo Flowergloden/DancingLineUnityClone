@@ -24,6 +24,14 @@ public class MovementComponent : MonoBehaviour
     [HideInInspector]public Vector3 deltaScale;
 
     private AttachedLine _attachedLine;
+
+    public AttachedLine AttachedLine
+    {
+        get
+        {
+            return _attachedLine;
+        }
+    }
     private bool _falling = false;
     private void Start()
     {
@@ -89,5 +97,10 @@ public class MovementComponent : MonoBehaviour
     public void StopLine()//停止移动
     {
         _attachedLine.HasStop = true;
+    }
+
+    public void SetDeltaScale(Vector3 value)
+    {
+        deltaScale = value;
     }
 }
