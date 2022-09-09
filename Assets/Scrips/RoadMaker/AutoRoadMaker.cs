@@ -17,6 +17,7 @@ public class AutoRoadMaker : MonoBehaviour
 
     private void Start()
     {
+        mainLine = GameObject.FindWithTag("Line");
         mainLine.GetComponent<Rigidbody>().useGravity = false;
         _father = mainLine.GetComponent<MovementComponent>();
         _speed = _father.speed;

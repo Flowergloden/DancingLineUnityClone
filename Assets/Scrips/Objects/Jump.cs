@@ -50,6 +50,8 @@ public class Jump : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Line"))
+        {
             _startJump = false;
+        }
     }
 }

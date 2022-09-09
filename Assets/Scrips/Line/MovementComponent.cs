@@ -54,7 +54,7 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    private void CreatNewLine()//生成一条附加线
+    public void CreatNewLine()//生成一条附加线
     {
         _attachedLine = Instantiate(line, tr.position,Quaternion.identity).GetComponent<AttachedLine>();
         _attachedLine.speed = speed;
@@ -89,6 +89,5 @@ public class MovementComponent : MonoBehaviour
     public void StopLine()//停止移动
     {
         _attachedLine.HasStop = true;
-        deltaScale = Vector3.zero;
     }
 }
